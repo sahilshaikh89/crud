@@ -1,0 +1,12 @@
+{
+	"aliases": [
+		{"prop": "ssoCategories", "alias": "cat"}
+	],
+	"restrictions": [	
+		{"op": "distinct"},	
+		{"op": "gt", "prop": "id", "value": "?"}		
+	],
+	"orderList": [
+		{"order": "asc", "prop":"id"}
+	]
+}

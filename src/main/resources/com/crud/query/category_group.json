@@ -1,0 +1,12 @@
+{
+	"aliases": [
+		{"prop": "ssoApplicationses", "alias": "app", "joinType": "LEFT"}
+	],
+	"projectionList": [
+		{"projection": "count", "prop": "createdBy"},
+		{"projection": "groupProperty", "prop": "createdBy"}
+	],	
+	"restrictions": [			
+		{"op": "gt", "prop": "id", "value": "?"}				
+	]
+}

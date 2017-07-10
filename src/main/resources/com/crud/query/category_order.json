@@ -1,0 +1,12 @@
+{
+	"aliases": [
+		{"prop": "ssoApplicationses", "alias": "app", "joinType": "LEFT"}
+	],
+	"restrictions": [
+		{"op": "distinct"},
+		{"op": "gt", "prop": "id", "value": "?"}		
+	],
+	"orderList": [
+		{"order": "asc", "prop":"name"}
+	]
+}

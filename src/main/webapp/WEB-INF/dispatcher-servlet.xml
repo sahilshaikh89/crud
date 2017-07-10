@@ -1,0 +1,83 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+       http://www.springframework.org/schema/beans/spring-beans.xsd 
+       http://www.springframework.org/schema/context 
+       http://www.springframework.org/schema/context/spring-context-3.0.xsd 
+       http://www.springframework.org/schema/mvc 
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd       
+       http://www.springframework.org/schema/tx 
+       http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+	<context:component-scan base-package="com.crud.sample" />
+
+	<mvc:annotation-driven validator="myBeansValidator" />
+
+	<bean id="myBeansValidator"
+		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+
+	</bean>
+
+
+
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location">
+			<value>classpath:resources/jdbc.properties</value>
+		</property>
+	</bean>
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName">
+			<value>${jdbc.driverClassName}</value>
+		</property>
+		<property name="url">
+			<value>${jdbc.url}</value>
+		</property>
+		<property name="username">
+			<value>${jdbc.username}</value>
+		</property>
+		<property name="password">
+			<value>${jdbc.password}</value>
+		</property>
+	</bean>
+
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hbm2ddl.auto">validate</prop>
+				<prop key="hibernate.format_sql">true</prop>
+				<prop key="hibernate.use_sql_comments">true</prop>
+				<!-- <prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop> -->
+				<!-- <prop key="hibernate.cache.use_query_cache">true</prop> -->
+				<!-- <prop key="hibernate.cache.use_second_level_cache">true</prop> -->
+				<!-- <prop key="hibernate.cache.reion.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</prop> -->
+				<!-- <prop key="hibernate.cache.provider_configuration_file_resource_path">/WEB-INF/ehcahce/ehcache.xml</prop> -->
+			</props>
+		</property>
+		<property name="dataSource">
+			<ref bean="dataSource"></ref>
+		</property>
+		<property name="configLocation">
+			<value>/WEB-INF/hibernate.cfg.xml</value>
+		</property>
+		<property name="configurationClass">
+			<value>org.hibernate.cfg.AnnotationConfiguration</value>
+		</property>
+	</bean>
+	<tx:annotation-driven transaction-manager="transactionManager"></tx:annotation-driven>
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+	<import resource="classpath:com/tcl/soap/context/soap-service.xml" />
+	<import resource="classpath:com/tcl/rest/context/rest-service.xml" />
+
+</beans>

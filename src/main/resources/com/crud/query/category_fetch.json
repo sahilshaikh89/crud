@@ -1,0 +1,21 @@
+{
+	"aliases": [
+		{"prop": "ssoApplicationses", "alias": "app", "joinType": "LEFT"}
+	],
+	"restrictions": [
+		{"op": "distinct"},
+		{"op": "gt", "prop": "id", "value": "?"},
+		{
+			"op":"and", 
+			"restriction": [
+				{"op": "in", "prop": "app.name", "value": "?"},
+				{"op": "not", 
+					"restriction": [
+						{"op": "eq", "prop": "name", "value": "?"}				
+					]
+				},
+				{"op":"isNull", "prop":"updatedBy"}
+			]
+		}		
+	]
+}

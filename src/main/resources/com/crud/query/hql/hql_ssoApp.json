@@ -1,0 +1,6 @@
+{
+	"type": "SELECT",
+	"description": "Query called for groupby. Output SSOAPP | Category",
+	"hql": "FROM SsoCategories cat where cat.createdDt between :start and :end",
+	"resultTransformer1": "com.tcl.sample.query.transformer.QuerySsoAppTransformer"
+}
